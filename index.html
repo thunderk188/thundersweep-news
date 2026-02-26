@@ -37,17 +37,24 @@
     <!-- Header -->
     <header class="bg-brand-800 border-b border-gray-700 sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
+            <a href="https://thundersweep.com" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                <!-- Using the same concept, but making it a clickable link to main domain -->
                 <svg class="w-8 h-8 text-brand-500" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                 </svg>
-                <h1 class="text-xl font-bold tracking-tight text-white">ThunderSecurity <span
-                        class="text-brand-500">News</span></h1>
-            </div>
-            <div>
-                <a href="https://chromewebstore.google.com/" target="_blank"
+                <div class="flex flex-col">
+                    <h1 class="text-xl font-bold tracking-tight leading-none text-white">ThunderSweep</h1>
+                    <span class="text-[10px] font-bold tracking-wider text-brand-400 uppercase mt-1">News
+                        Aggregator</span>
+                </div>
+            </a>
+            <div class="flex items-center space-x-6">
+                <a href="https://thundersweep.com/blog/index.html"
+                    class="hidden sm:block text-sm font-medium text-gray-400 hover:text-white transition-colors">Read
+                    Our Blog</a>
+                <a href="https://thundersweep.com"
                     class="hidden sm:inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors">
-                    Try ThunderSweep
+                    Back to Main Site
                 </a>
             </div>
         </div>
@@ -62,11 +69,73 @@
                 <p class="mt-1 text-sm text-gray-400">Aggregated real-time updates from top cybersecurity sources.</p>
             </div>
             <div class="text-xs text-gray-500 text-right">
-                Last updated:<br /> <span class="font-medium text-gray-400">February 26, 2026 at 12:06 PM EST</span>
+                Last updated:<br /> <span class="font-medium text-gray-400">February 26, 2026 at 01:58 PM EST</span>
             </div>
         </div>
 
         <div class="space-y-6">
+            
+
+            
+
+            <!-- Standard Article Card -->
+            <article
+                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
+                <a href="https://www.bleepingcomputer.com/news/security/trend-micro-warns-of-critical-apex-one-rce-vulnerabilities/" target="_blank" rel="noopener noreferrer" class="block p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
+                            BleepingComputer
+                        </span>
+                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
+                            Feb 26, 2026 - 12:58 
+                        </span>
+                    </div>
+                    <h3
+                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
+                        Trend Micro warns of critical Apex One code execution flaws
+                    </h3>
+                    
+                    <p class="text-sm text-gray-400 line-clamp-3">
+                        Trend Micro has patched two critical Apex One vulnerabilities that allow attackers to gain remote code execution (RCE) on vulnerable Windows systems. [...]
+                    </p>
+                    
+                </a>
+            </article>
+
+            
+
+            
+
+            
+
+            <!-- Standard Article Card -->
+            <article
+                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
+                <a href="https://www.bleepingcomputer.com/news/security/european-dyi-chain-manomano-data-breach-impacts-38-million-customers/" target="_blank" rel="noopener noreferrer" class="block p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
+                            BleepingComputer
+                        </span>
+                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
+                            Feb 26, 2026 - 12:35 
+                        </span>
+                    </div>
+                    <h3
+                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
+                        European DYI chain ManoMano data breach impacts 38 million customers
+                    </h3>
+                    
+                    <p class="text-sm text-gray-400 line-clamp-3">
+                        DIY store chain ManoMano is notifying customers of a data breach personal data, which was caused by hackers compromising a third-party service provider. [...]
+                    </p>
+                    
+                </a>
+            </article>
+
+            
+
             
 
             
@@ -226,6 +295,39 @@
 
             
 
+            <!-- ThunderSweep Native Ad -->
+            <article
+                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
+                <div
+                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
+                    Sponsored Tool</div>
+                <div
+                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
+                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <div class="flex-1 text-center sm:text-left">
+                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
+                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
+                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
+                            do.</p>
+                        <a href="https://chromewebstore.google.com/" target="_blank"
+                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
+                            Add ThunderSweep to Chrome
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            
+
+            
+
+            
+
             <!-- Standard Article Card -->
             <article
                 class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
@@ -280,39 +382,6 @@
                     </p>
                     
                 </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
-                </div>
             </article>
 
             
@@ -476,6 +545,39 @@
 
             
 
+            <!-- ThunderSweep Native Ad -->
+            <article
+                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
+                <div
+                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
+                    Sponsored Tool</div>
+                <div
+                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
+                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <div class="flex-1 text-center sm:text-left">
+                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
+                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
+                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
+                            do.</p>
+                        <a href="https://chromewebstore.google.com/" target="_blank"
+                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
+                            Add ThunderSweep to Chrome
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            
+
+            
+
+            
+
             <!-- Standard Article Card -->
             <article
                 class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
@@ -530,39 +632,6 @@
                     </p>
                     
                 </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
-                </div>
             </article>
 
             
@@ -726,6 +795,39 @@
 
             
 
+            <!-- ThunderSweep Native Ad -->
+            <article
+                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
+                <div
+                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
+                    Sponsored Tool</div>
+                <div
+                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
+                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <div class="flex-1 text-center sm:text-left">
+                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
+                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
+                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
+                            do.</p>
+                        <a href="https://chromewebstore.google.com/" target="_blank"
+                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
+                            Add ThunderSweep to Chrome
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            
+
+            
+
+            
+
             <!-- Standard Article Card -->
             <article
                 class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
@@ -780,39 +882,6 @@
                     </p>
                     
                 </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
-                </div>
             </article>
 
             
@@ -976,6 +1045,39 @@
 
             
 
+            <!-- ThunderSweep Native Ad -->
+            <article
+                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
+                <div
+                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
+                    Sponsored Tool</div>
+                <div
+                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
+                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <div class="flex-1 text-center sm:text-left">
+                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
+                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
+                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
+                            do.</p>
+                        <a href="https://chromewebstore.google.com/" target="_blank"
+                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
+                            Add ThunderSweep to Chrome
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            
+
+            
+
+            
+
             <!-- Standard Article Card -->
             <article
                 class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
@@ -1030,39 +1132,6 @@
                     </p>
                     
                 </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
-                </div>
             </article>
 
             
@@ -1226,68 +1295,6 @@
 
             
 
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/ex-l3harris-exec-jailed-for-selling-zero-days-to-russian-exploit-broker/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 03:21 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Ex-L3Harris exec jailed for selling zero-days to Russian exploit broker
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The former head of Trenchant, a specialized U.S. defense contractor unit, was sentenced Tuesday to more than seven years in federal prison for stealing and selling zero-day exploits to a Russian broker whose clients include the Russian government. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/cybersecurity-operations/operation-red-card-2-0-leads-to-651-arrests-in-africa" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 08:00 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Operation Red Card 2.0 Leads to 651 Arrests in Africa
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        In the latest operation targeting cybercrime groups, African law enforcement agencies cooperated with Interpol and cybersecurity firms to recover more than $4.3 million.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
             <!-- ThunderSweep Native Ad -->
             <article
                 class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
@@ -1324,23 +1331,23 @@
             <!-- Standard Article Card -->
             <article
                 class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/microsoft/windows-11-kb5077241-update-improves-bitlocker-adds-sysmon-tool/" target="_blank" rel="noopener noreferrer" class="block p-6">
+                <a href="https://www.darkreading.com/cybersecurity-operations/operation-red-card-2-0-leads-to-651-arrests-in-africa" target="_blank" rel="noopener noreferrer" class="block p-6">
                     <div class="flex items-center justify-between mb-2">
                         <span
                             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
+                            Dark Reading
                         </span>
                         <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 02:51 
+                            Feb 25, 2026 - 08:00 UTC
                         </span>
                     </div>
                     <h3
                         class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Windows 11 KB5077241 update improves BitLocker, adds Sysmon tool
+                        Operation Red Card 2.0 Leads to 651 Arrests in Africa
                     </h3>
                     
                     <p class="text-sm text-gray-400 line-clamp-3">
-                        Microsoft has released the KB5077241 optional cumulative update for Windows 11, which comes with 29 changes, including improvements to BitLocker, a new network speed test tool, and native System Monitor (Sysmon) functionality. [...]
+                        In the latest operation targeting cybercrime groups, African law enforcement agencies cooperated with Interpol and cybersecurity firms to recover more than $4.3 million.
                     </p>
                     
                 </a>
