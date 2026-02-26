@@ -1,1871 +1,1179 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cybersecurity News - ThunderSecurity</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            500: '#3b82f6', // Bright blue
-                            600: '#2563eb', // Deeper blue
-                            900: '#0f172a', // Very dark slate (background)
-                            800: '#1e293b', // Dark slate (cards)
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Cybersecurity News — ThunderSweep</title>
+    <meta name="description" content="Aggregated real-time updates from top cybersecurity sources.">
+    <link rel="icon" type="image/png" href="https://thundersweep.com/logo.png">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --blue: #1a73e8;
+            --blue-dark: #1557b0;
+            --blue-light: #e8f0fe;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --radius: 12px;
+            --red-light: #fef2f2;
+            --red: #ef4444;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            color: var(--gray-900);
+            line-height: 1.6;
+            background: #fff;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 12px 0;
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--gray-900);
+        }
+
+        .nav-brand img {
+            height: 32px;
+        }
+
+        .nav-brand span {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .nav-brand .brand-sub {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--blue);
+            margin-left: 4px;
+            border-left: 1px solid var(--gray-200);
+            padding-left: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--blue);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: #fff !important;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-dark);
+            transform: translateY(-1px);
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 56px 24px 80px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--gray-200);
+            padding-bottom: 24px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .page-header p {
+            color: var(--gray-500);
+            margin-top: 4px;
+            font-size: 1.1rem;
+        }
+
+        .last-updated {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-align: right;
+        }
+
+        .last-updated span {
+            font-weight: 600;
+            color: var(--gray-700);
+            display: block;
+        }
+
+        .articles-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* ARTICLE CARDS */
+        .article-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--gray-200);
+            transition: box-shadow 0.2s, border-color 0.2s;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .article-card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-color: var(--blue-light);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .source-tag {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .article-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 10px;
+            line-height: 1.4;
+            transition: color 0.2s;
+        }
+
+        .article-card:hover h3 {
+            color: var(--blue);
+        }
+
+        .article-card p {
+            font-size: 14.5px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* AD CARD */
+        .ad-card {
+            background: var(--blue-light);
+            border: 1.5px solid var(--blue);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 32px 24px;
+        }
+
+        .ad-card:hover {
+            border-color: var(--blue-dark);
+        }
+
+        .ad-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--blue);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 0 12px 0 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ad-icon {
+            flex-shrink: 0;
+            width: 56px;
+            height: 56px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.15);
+        }
+
+        .ad-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--blue);
+        }
+
+        .ad-content {
+            flex: 1;
+        }
+
+        .ad-content h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .ad-content p {
+            font-size: 14px;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+            -webkit-line-clamp: unset;
+        }
+
+        .ad-card .btn-primary {
+            width: fit-content;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--gray-900);
+            color: var(--gray-500);
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 13px;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--gray-500);
+            text-decoration: underline;
+        }
+
+        footer .footer-links {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 640px) {
+            .hide-mobile {
+                display: none;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .last-updated {
+                text-align: left;
+            }
+
+            .ad-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 32px 20px 24px;
+            }
+
+            .ad-card .btn-primary {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
-<body class="bg-brand-900 text-gray-200 min-h-screen">
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a class="nav-brand" href="https://thundersweep.com">
+                <img src="https://thundersweep.com/logo.png" alt="ThunderSweep">
+                <span>ThunderSweep</span>
+                <span class="brand-sub">News</span>
+            </a>
+            <div class="nav-links">
+                <a href="https://thundersweep.com/blog/index.html" class="hide-mobile">Read Our Blog</a>
+                <a href="https://thundersweep.com" class="hide-mobile">Back to Main Site</a>
+                <a href="https://chromewebstore.google.com/" target="_blank" class="btn btn-primary">Try
+                    ThunderSweep</a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Header -->
-    <header class="bg-brand-800 border-b border-gray-700 sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-            <a href="https://thundersweep.com" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-                <!-- Using the same concept, but making it a clickable link to main domain -->
-                <svg class="w-8 h-8 text-brand-500" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                </svg>
-                <div class="flex flex-col">
-                    <h1 class="text-xl font-bold tracking-tight leading-none text-white">ThunderSweep</h1>
-                    <span class="text-[10px] font-bold tracking-wider text-brand-400 uppercase mt-1">News
-                        Aggregator</span>
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1>Latest Intelligence</h1>
+                <p>Aggregated real-time updates from top cybersecurity sources.</p>
+            </div>
+            <div class="last-updated">
+                Last updated:<br />
+                <span>February 26, 2026 at 02:31 PM EST</span>
+            </div>
+        </div>
+
+        <div class="articles-grid">
+            
+            
+            <a href="https://thehackernews.com/2026/02/aeternum-c2-botnet-stores-encrypted.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 26, 2026 - 23:30 </span>
+                </div>
+                <h3>Aeternum C2 Botnet Stores Encrypted Commands on Polygon Blockchain to Evade Takedown</h3>
+                
+                <p>Cybersecurity researchers have disclosed details of a new botnet loader called Aeternum C2 that uses a blockchain-based command-and-control (C2) infrastructure to make it resilient to takedown efforts. "Instead of relying on traditional servers or domains for command-and-control, Aeternum stores its instructions on the public Polygon blockchain," Qrator Labs said in a report shared with The</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/trend-micro-warns-of-critical-apex-one-rce-vulnerabilities/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 26, 2026 - 12:58 </span>
+                </div>
+                <h3>Trend Micro warns of critical Apex One code execution flaws</h3>
+                
+                <p>Trend Micro has patched two critical Apex One vulnerabilities that allow attackers to gain remote code execution (RCE) on vulnerable Windows systems. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/european-dyi-chain-manomano-data-breach-impacts-38-million-customers/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 26, 2026 - 12:35 </span>
+                </div>
+                <h3>European DYI chain ManoMano data breach impacts 38 million customers</h3>
+                
+                <p>DIY store chain ManoMano is notifying customers of a data breach personal data, which was caused by hackers compromising a third-party service provider. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/critical-juniper-networks-ptx-flaw-allows-full-router-takeover/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 26, 2026 - 11:42 </span>
+                </div>
+                <h3>Critical Juniper Networks PTX flaw allows full router takeover</h3>
+                
+                <p>A critical vulnerability in the Junos OS Evolved network operating system running on PTX Series routers from Juniper Networks could allow an unauthenticated attacker to execute code remotely with root privileges. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/olympique-marseille-football-club-confirms-cyberattack-after-data-leak/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 26, 2026 - 11:11 </span>
+                </div>
+                <h3>Olympique Marseille confirms 'attempted' cyberattack after data leak</h3>
+                
+                <p>French professional football club Olympique de Marseille has confirmed a cyberattack after a threat actor claimed on Monday that it breached the club's systems earlier this month. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thehackernews.com/2026/02/uat-10027-targets-us-education-and.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 26, 2026 - 20:47 </span>
+                </div>
+                <h3>UAT-10027 Targets U.S. Education and Healthcare with Dohdoor Backdoor</h3>
+                
+                <p>A previously undocumented threat activity cluster has been attributed to an ongoing malicious campaign targeting education and healthcare sectors in the U.S. since at least December 2025. The campaign is being tracked by Cisco Talos under the moniker UAT-10027. The end goal of the attacks is to deliver a never-before-seen backdoor codenamed Dohdoor. "Dohdoor utilizes the DNS-over-HTTPS (DoH)</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thehackernews.com/2026/02/threatsday-bulletin-kali-linux-claude.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 26, 2026 - 19:58 </span>
+                </div>
+                <h3>ThreatsDay Bulletin: Kali Linux + Claude, Chrome Crash Traps, WinRAR Flaws, LockBit & 15+ Stories</h3>
+                
+                <p>Nothing here looks dramatic at first glance. That’s the point. Many of this week’s threats begin with something ordinary, like an ad, a meeting invite, or a software update. Behind the scenes, the tactics are sharper. Access happens faster. Control is established sooner. Cleanup becomes harder. Here is a quick look at the signals worth paying attention to. AI-powered command</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thundersweep.com" class="article-card ad-card" target="_blank" rel="noopener noreferrer">
+                <div class="ad-badge">Sponsored Tool</div>
+                <div class="ad-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+                    </svg>
+                </div>
+                <div class="ad-content">
+                    <h3>Are your old tax returns exposed in Gmail?</h3>
+                    <p>Most data breaches start with forgotten attachments. Scan your Gmail locally (zero cloud upload)
+                        to find and delete sensitive documents before hackers do.</p>
+                    <span class="btn btn-primary">Try ThunderSweep Free</span>
                 </div>
             </a>
-            <div class="flex items-center space-x-6">
-                <a href="https://thundersweep.com/blog/index.html"
-                    class="hidden sm:block text-sm font-medium text-gray-400 hover:text-white transition-colors">Read
-                    Our Blog</a>
-                <a href="https://thundersweep.com"
-                    class="hidden sm:inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors">
-                    Back to Main Site
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-
-        <div class="mb-8 flex justify-between items-end">
-            <div>
-                <h2 class="text-2xl font-extrabold text-white tracking-tight">Latest Intelligence</h2>
-                <p class="mt-1 text-sm text-gray-400">Aggregated real-time updates from top cybersecurity sources.</p>
-            </div>
-            <div class="text-xs text-gray-500 text-right">
-                Last updated:<br /> <span class="font-medium text-gray-400">February 26, 2026 at 02:01 PM EST</span>
-            </div>
-        </div>
-
-        <div class="space-y-6">
             
-
             
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/trend-micro-warns-of-critical-apex-one-rce-vulnerabilities/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 12:58 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Trend Micro warns of critical Apex One code execution flaws
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Trend Micro has patched two critical Apex One vulnerabilities that allow attackers to gain remote code execution (RCE) on vulnerable Windows systems. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
             
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/european-dyi-chain-manomano-data-breach-impacts-38-million-customers/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 12:35 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        European DYI chain ManoMano data breach impacts 38 million customers
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        DIY store chain ManoMano is notifying customers of a data breach personal data, which was caused by hackers compromising a third-party service provider. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/critical-juniper-networks-ptx-flaw-allows-full-router-takeover/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 11:42 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Critical Juniper Networks PTX flaw allows full router takeover
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        A critical vulnerability in the Junos OS Evolved network operating system running on PTX Series routers from Juniper Networks could allow an unauthenticated attacker to execute code remotely with root privileges. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/olympique-marseille-football-club-confirms-cyberattack-after-data-leak/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 11:11 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Olympique Marseille confirms 'attempted' cyberattack after data leak
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        French professional football club Olympique de Marseille has confirmed a cyberattack after a threat actor claimed on Monday that it breached the club's systems earlier this month. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/uat-10027-targets-us-education-and.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 20:47 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        UAT-10027 Targets U.S. Education and Healthcare with Dohdoor Backdoor
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        A previously undocumented threat activity cluster has been attributed to an ongoing malicious campaign targeting education and healthcare sectors in the U.S. since at least December 2025. The campaign is being tracked by Cisco Talos under the moniker UAT-10027. The end goal of the attacks is to deliver a never-before-seen backdoor codenamed Dohdoor. "Dohdoor utilizes the DNS-over-HTTPS (DoH)
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/threatsday-bulletin-kali-linux-claude.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 19:58 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        ThreatsDay Bulletin: Kali Linux + Claude, Chrome Crash Traps, WinRAR Flaws, LockBit & 15+ Stories
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Nothing here looks dramatic at first glance. That’s the point. Many of this week’s threats begin with something ordinary, like an ad, a meeting invite, or a software update. Behind the scenes, the tactics are sharper. Access happens faster. Control is established sooner. Cleanup becomes harder. Here is a quick look at the signals worth paying attention to. AI-powered command
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/ransomware-payment-rate-drops-to-record-low-as-attacks-surge/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 09:00 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Ransomware payment rate drops to record low as attacks surge
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The number of ransomware victims paying threat actors has dropped to 28% last year, an all-time low, despite a significant increase in the number of claimed attacks. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
+            <a href="https://www.bleepingcomputer.com/news/security/ransomware-payment-rate-drops-to-record-low-as-attacks-surge/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 26, 2026 - 09:00 </span>
                 </div>
-            </article>
-
+                <h3>Ransomware payment rate drops to record low as attacks surge</h3>
+                
+                <p>The number of ransomware victims paying threat actors has dropped to 28% last year, an all-time low, despite a significant increase in the number of claimed attacks. [...]</p>
+                
+            </a>
             
-
             
-
             
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/microsoft-expands-windows-restore-to-more-enterprise-devices/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 08:04 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Microsoft expands Windows restore to more enterprise devices
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Microsoft now allows more enterprise users to restore their personal settings and Microsoft Store apps from a previous Windows 11 device. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/expert-recommends-prepare-for-pqc-right.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 17:36 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Expert Recommends: Prepare for PQC Right Now
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Introduction: Steal It Today, Break It in a Decade Digital evolution is unstoppable, and though the pace may vary, things tend to fall into place sooner rather than later. That, of course, applies to adversaries as well. The rise of ransomware and cyber extortion generated funding for a complex and highly professional criminal ecosystem. The era of the cloud brought general availability of
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/gaming/new-york-sues-valve-for-promoting-illegal-gambling-via-game-loot-boxes/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 06:44 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        New York sues Valve for promoting illegal gambling via game loot boxes
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        New York Attorney General Letitia James sued video game developer and publisher Valve Corporation for using game loot boxes to facilitate illegal gambling activities among children and teenagers. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/fake-nextjs-repos-target-developers.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 16:05 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Microsoft Warns Developers of Fake Next.js Job Repos Delivering In-Memory Malware
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        A "coordinated developer-targeting campaign" is using malicious repositories disguised as legitimate Next.js projects and technical assessments to trick victims into executing them and establish persistent access to compromised machines. "The activity aligns with a broader cluster of threats that use job-themed lures to blend into routine developer workflows and increase the likelihood of code
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/malicious-stripeapi-nuget-package.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 15:39 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Malicious StripeApi NuGet Package Mimicked Official Library and Stole API Tokens
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Cybersecurity researchers have disclosed details of a new malicious package discovered on the NuGet Gallery, impersonating a library from financial services firm Stripe in an attempt to target the financial sector. The package, codenamed StripeApi.Net, attempts to masquerade as Stripe.net, a legitimate library from Stripe that has over 75 million downloads. It was uploaded by a user named
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/cisco-sd-wan-zero-day-cve-2026-20127.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 11:43 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Cisco SD-WAN Zero-Day CVE-2026-20127 Exploited Since 2023 for Admin Access
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        A newly disclosed maximum-severity security flaw in Cisco Catalyst SD-WAN Controller (formerly vSmart) and Catalyst SD-WAN Manager (formerly vManage) has come under active exploitation in the wild as part of malicious activity that dates back to 2023. The vulnerability, tracked as CVE-2026-20127 (CVSS score: 10.0), allows an unauthenticated remote attacker to bypass authentication and obtain
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/cyberattacks-data-breaches/chinese-police-chatgpt-smear-japan-pm-takaichi" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 26, 2026 - 00:00 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Chinese Police Use ChatGPT to Smear Japan PM Takaichi
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        A Chinese keyboard warrior inadvertently leaked information about politically motivated influence operations through a ChatGPT account.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
+            <a href="https://www.bleepingcomputer.com/news/security/microsoft-expands-windows-restore-to-more-enterprise-devices/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 26, 2026 - 08:04 </span>
                 </div>
-            </article>
-
+                <h3>Microsoft expands Windows restore to more enterprise devices</h3>
+                
+                <p>Microsoft now allows more enterprise users to restore their personal settings and Microsoft Store apps from a previous Windows 11 device. [...]</p>
+                
+            </a>
             
-
             
-
             
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/medical-device-maker-ufp-technologies-warns-of-data-stolen-in-cyberattack/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 18:02 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Medical device maker UFP Technologies warns of data stolen in cyberattack
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        American manufacturer of medical devices, UFP Technologies, has disclosed that a cybersecurity incident has compromised its IT systems and data. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/application-security/flaws-claude-code-developer-machines-risk" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 22:02 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Flaws in Claude Code Put Developers' Machines at Risk
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The vulnerabilities highlight a big drawback to integrating AI into software development workflows and the potential impact on supply chains.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/fake-nextjs-job-interview-tests-backdoor-developers-devices/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 16:47 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Fake Next.js job interview tests backdoor developer's devices
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The Microsoft Defender team has discovered a coordinated campaign targeting software developers through malicious repositories posing as legitimate Next.js projects and technical assessment materials, including recruiting coding tests. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/threat-intelligence/ramp-forum-seizure-fractures-ransomware-ecosystem" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 21:14 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        RAMP Forum Seizure Fractures Ransomware Ecosystem
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Researchers suggest defenders monitor how these malicious groups re-form and leverage the useful threat intel to guide their next moves.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/cyber-risk/pci-council-threats-payments-systems-speeding-up" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 19:15 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        PCI Council Says Threats to Payments Systems Are Speeding Up
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The PCI Security Standards Council experienced a record year in many regards, but its first annual report shows it needs to work even faster to stay ahead of attackers.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/critical-cisco-sd-wan-bug-exploited-in-zero-day-attacks-since-2023/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 13:01 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Critical Cisco SD-WAN bug exploited in zero-day attacks since 2023
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Cisco is warning that a critical authentication bypass vulnerability in Cisco Catalyst SD-WAN, tracked as CVE-2026-20127, was actively exploited in zero-day attacks that allowed remote attackers to compromise controllers and add malicious rogue peers to targeted networks. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/google-disrupts-unc2814-gridtide.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 23:16 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Google Disrupts UNC2814 GRIDTIDE Campaign After 53 Breaches Across 42 Countries
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Google on Wednesday disclosed that it worked with industry partners to disrupt the infrastructure of a suspected China-nexus cyber espionage group tracked as UNC2814 that breached at least 53 organizations across 42 countries. "This prolific, elusive actor has a long history of targeting international governments and global telecommunications organizations across Africa, Asia, and the Americas,"
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
+            <a href="https://thehackernews.com/2026/02/expert-recommends-prepare-for-pqc-right.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 26, 2026 - 17:36 </span>
                 </div>
-            </article>
-
+                <h3>Expert Recommends: Prepare for PQC Right Now</h3>
+                
+                <p>Introduction: Steal It Today, Break It in a Decade Digital evolution is unstoppable, and though the pace may vary, things tend to fall into place sooner rather than later. That, of course, applies to adversaries as well. The rise of ransomware and cyber extortion generated funding for a complex and highly professional criminal ecosystem. The era of the cloud brought general availability of</p>
+                
+            </a>
             
-
             
-
             
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/chinese-cyberspies-breached-dozens-of-telecom-firms-govt-agencies/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 12:00 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Chinese cyberspies breached dozens of telecom firms, govt agencies
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Google's Threat Intelligence Group (GTIG), Mandiant, and partners disrupted a global espionage campaign attributed to a suspected Chinese threat actor that used SaaS API calls to hide malicious traffic in attacks targeting telecom and government networks. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/claude-code-flaws-allow-remote-code.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 22:30 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Claude Code Flaws Allow Remote Code Execution and API Key Exfiltration
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Cybersecurity researchers have disclosed multiple security vulnerabilities in Anthropic's Claude Code, an artificial intelligence (AI)-powered coding assistant, that could result in remote code execution and theft of API credentials. "The vulnerabilities exploit various configuration mechanisms, including Hooks, Model Context Protocol (MCP) servers, and environment variables – executing
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/cyberattacks-data-breaches/malicious-nextjs-repos-developers-fake-job-interviews" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 16:42 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Malicious Next.js Repos Target Developers Via Fake Job Interviews
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Linked to North Korean fake job-recruitment campaigns, the poisoned repositories are aimed at establishing persistent access to infected machines.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/marquis-sues-sonicwall-over-backup-breach-that-led-to-ransomware-attack/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 10:54 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Marquis sues SonicWall over backup breach that led to ransomware attack
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Marquis Software Solutions has filed a lawsuit against SonicWall, accusing the cybersecurity company of gross negligence and misrepresentation that allegedly led to a ransomware attack disrupting operations at 74 U.S. banks. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/slh-offers-5001000-per-call-to-recruit.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 20:36 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        SLH Offers $500–$1,000 Per Call to Recruit Women for IT Help Desk Vishing Attacks
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The notorious cybercrime collective known as Scattered LAPSUS$ Hunters (SLH) has been observed offering financial incentives to recruit women to pull off social engineering attacks. The idea is to hire them for voice phishing campaigns targeting IT help desks, Dataminr said in a new threat brief. The group is said to be offering anywhere between $500 and $1,000 upfront per call, in addition to
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/the-openclaw-hype-analysis-of-chatter-from-open-source-deep-and-dark-web/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 10:01 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        The OpenClaw Hype: Analysis of Chatter from Open-Source Deep and Dark Web
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        OpenClaw has sparked heavy Telegram and dark web chatter, but Flare's data shows more research hype than mass exploitation. Flare explains how its telemetry found real supply-chain risk in the skills marketplace, yet limited signs of large-scale criminal operationalization. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/top-5-ways-broken-triage-increases.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 20:00 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Top 5 Ways Broken Triage Increases Business Risk Instead of Reducing It
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Triage is supposed to make things simpler. In a lot of teams, it does the opposite. When you can’t reach a confident verdict early, alerts turn into repeat checks, back-and-forth, and “just escalate it” calls. That cost doesn’t stay inside the SOC; it shows up as missed SLAs, higher cost per case, and more room for real threats to slip through. So where does triage go wrong? Here are five triage
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
+            <a href="https://www.bleepingcomputer.com/news/gaming/new-york-sues-valve-for-promoting-illegal-gambling-via-game-loot-boxes/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 26, 2026 - 06:44 </span>
                 </div>
-            </article>
-
+                <h3>New York sues Valve for promoting illegal gambling via game loot boxes</h3>
+                
+                <p>New York Attorney General Letitia James sued video game developer and publisher Valve Corporation for using game loot boxes to facilitate illegal gambling activities among children and teenagers. [...]</p>
+                
+            </a>
             
-
             
-
             
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/threat-intelligence/why-call-this-number-toad-emails-beat-gateways" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 14:00 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Why 'Call This Number' TOAD Emails Beat Gateways
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Attackers are bypassing email gateways through telephone-oriented attack delivery (TOAD), in which the only email payload is a phone number.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/zyxel-warns-of-critical-rce-flaw-affecting-over-a-dozen-routers/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 07:53 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Zyxel warns of critical RCE flaw affecting over a dozen routers
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Taiwan networking provider Zyxel has released security updates to address a critical vulnerability affecting over a dozen router models that can allow unauthenticated attackers to gain remote command execution on unpatched devices. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/malicious-nuget-packages-stole-aspnet.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 18:13 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Malicious NuGet Packages Stole ASP.NET Data; npm Package Dropped Malware
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Cybersecurity researchers have discovered four malicious NuGet packages that are designed to target ASP.NET web application developers to steal sensitive data. The campaign, discovered by Socket, exfiltrates ASP.NET Identity data, including user accounts, role assignments, and permission mappings, as well as manipulates authorization rules to create persistent backdoors in victim applications.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/ics-ot-security/richter-scale-model-measures-cyber-incidents" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 12:00 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        'Richter Scale' Model Measures Magnitude of OT Cyber Incidents
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        ICS/OT experts have devised a scoring system for rating the severity and effects of cybersecurity events in operational technology environments.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/manual-processes-are-putting-national.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 16:30 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Manual Processes Are Putting National Security at Risk
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Why automating sensitive data transfers is now a mission-critical priority More than half of national security organizations still rely on manual processes to transfer sensitive data, according to The CYBER360: Defending the Digital Battlespace report. This should alarm every defense and government leader because manual handling of sensitive data is not just inefficient, it is a systemic
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.bleepingcomputer.com/news/security/us-sanctions-russian-exploit-broker-for-buying-stolen-zero-days/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            BleepingComputer
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 05:31 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        US sanctions Russian broker for buying stolen zero-day exploits
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The U.S. Treasury Department has sanctioned a Russian exploit broker who bought stolen hacking tools from a former executive of a U.S. defense contractor. [...]
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/defense-contractor-employee-jailed-for.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 14:19 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Defense Contractor Employee Jailed for Selling 8 Zero-Days to Russian Broker
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        A 39-year-old Australian national who was previously employed at U.S. defense contractor L3Harris has been sentenced to a little over seven years in prison for selling eight zero-day exploits to Russian exploit broker Operation Zero in exchange for millions of dollars. Peter Williams pleaded guilty to two counts of theft of trade secrets in October 2025. In addition to the jail term, Williams
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
+            <a href="https://thehackernews.com/2026/02/fake-nextjs-repos-target-developers.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 26, 2026 - 16:05 </span>
                 </div>
-            </article>
-
+                <h3>Microsoft Warns Developers of Fake Next.js Job Repos Delivering In-Memory Malware</h3>
+                
+                <p>A "coordinated developer-targeting campaign" is using malicious repositories disguised as legitimate Next.js projects and technical assessments to trick victims into executing them and establish persistent access to compromised machines. "The activity aligns with a broader cluster of threats that use job-themed lures to blend into routine developer workflows and increase the likelihood of code</p>
+                
+            </a>
             
-
             
-
             
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/cybersecurity-operations/operation-red-card-2-0-leads-to-651-arrests-in-africa" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 08:00 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Operation Red Card 2.0 Leads to 651 Arrests in Africa
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        In the latest operation targeting cybercrime groups, African law enforcement agencies cooperated with Interpol and cybersecurity firms to recover more than $4.3 million.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/solarwinds-patches-4-critical-serv-u.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 12:34 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        SolarWinds Patches 4 Critical Serv-U 15.5 Flaws Allowing Root Code Execution
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        SolarWinds has released updates to address four critical security flaws in its Serv-U file transfer software that, if successfully exploited, could result in remote code execution. The vulnerabilities, all rated 9.1 on the CVSS scoring system, are listed below - CVE-2025-40538 - A broken access control vulnerability that allows an attacker to create a system admin user and execute arbitrary
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://thehackernews.com/2026/02/cisa-confirms-active-exploitation-of.html" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            The Hacker News
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 25, 2026 - 10:53 
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        CISA Confirms Active Exploitation of FileZen CVE-2026-25108 Vulnerability
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The U.S. Cybersecurity and Infrastructure Security Agency (CISA) on Tuesday added a recently disclosed vulnerability in FileZen to its Known Exploited Vulnerabilities (KEV) catalog, citing evidence of active exploitation. The vulnerability, tracked as CVE-2026-25108 (CVSS v4 score: 8.7), is a case of operating system (OS) command injection that could allow an authenticated user to execute
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/cyber-risk/attackers-now-need-just-29-minutes-to-own-a-network" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 24, 2026 - 21:38 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Attackers Now Need Just 29 Minutes to Own a Network
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Credential misuse, AI tools, and security blind spots help attackers move through breached networks faster than ever, CrowdStrike finds.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/cyberattacks-data-breaches/lazarus-group-new-position-medusa-ransomware" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 24, 2026 - 21:18 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Lazarus Group Picks a New Poison: Medusa Ransomware
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The North Korean threat group also leveraged Comebacker backdoor, Blindingcan RAT, and info stealer Infohook in its recent attacks.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/cybersecurity-analytics/cybersecurity-firms-chase-ai-vc-market-skyrockets" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 24, 2026 - 13:04 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        As Cybersecurity Firms Chase AI, VC Market Skyrockets
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Investments in cybersecurity startups took off in 2025 as venture capital firms focused not just on AI-native tech but on talent as well.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/cyber-risk/atm-jackpotting-attacks-surged-2025" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 23, 2026 - 22:20 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Spitting Cash: ATM Jackpotting Attacks Surged in 2025
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The attacks cost banks more than $20 million in losses last year, as criminals used many of the same tools and tactics they have wielded for more than a decade.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
+            <a href="https://thehackernews.com/2026/02/malicious-stripeapi-nuget-package.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 26, 2026 - 15:39 </span>
                 </div>
-            </article>
-
+                <h3>Malicious StripeApi NuGet Package Mimicked Official Library and Stole API Tokens</h3>
+                
+                <p>Cybersecurity researchers have disclosed details of a new malicious package discovered on the NuGet Gallery, impersonating a library from financial services firm Stripe in an attempt to target the financial sector. The package, codenamed StripeApi.Net, attempts to masquerade as Stripe.net, a legitimate library from Stripe that has over 75 million downloads. It was uploaded by a user named</p>
+                
+            </a>
             
-
             
-
             
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/cyber-risk/more-dashboards-ai-decisions-provable" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 23, 2026 - 22:18 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        More Than Dashboards: AI Decisions Must Be Provable
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        AI systems have to be able to show a record of what happened and how.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/threat-intelligence/iran-muddywater-new-malware-tensions-mount" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 23, 2026 - 20:35 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Iran's MuddyWater Targets Orgs With Fresh Malware as Tensions Mount
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The long-active Iranian threat group debuted various attack strains and payloads in attacks against organizations in the Middle East and Africa.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://www.darkreading.com/threat-intelligence/enigma-cipher-device-secrets-cyber-pros" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Dark Reading
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 23, 2026 - 20:11 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Enigma Cipher Device Still Holds Secrets for Cyber Pros
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The Nazi relic's history is riddled with resilience errors, and those lessons still apply to defending against modern cyber threats.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://krebsonsecurity.com/2026/02/starkiller-phishing-service-proxies-real-login-pages-mfa/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Krebs on Security
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 20, 2026 - 20:00 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        ‘Starkiller’ Phishing Service Proxies Real Login Pages, MFA
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Most phishing websites are little more than static copies of login pages for popular online destinations, and they are often quickly taken down by anti-abuse activists and security firms. But a stealthy new phishing-as-a-service offering lets customers sidestep both of these pitfalls: It uses cleverly disguised links to load the target brand's real website, and then acts as a relay between the target and the legitimate site -- forwarding the victim's username, password and multi-factor authentication (MFA) code to the legitimate site and returning its responses.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://krebsonsecurity.com/2026/02/kimwolf-botnet-swamps-anonymity-network-i2p/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Krebs on Security
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 11, 2026 - 16:08 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Kimwolf Botnet Swamps Anonymity Network I2P
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        For the past week, the massive "Internet of Things" (IoT) botnet known as Kimwolf has been disrupting the The Invisible Internet Project (I2P), a decentralized, encrypted communications network designed to anonymize and secure online communications. I2P users started reporting disruptions in the network around the same time the Kimwolf botmasters began relying on it to evade takedown attempts against the botnet's control servers.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://krebsonsecurity.com/2026/02/patch-tuesday-february-2026-edition/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Krebs on Security
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 10, 2026 - 21:49 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Patch Tuesday, February 2026 Edition
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        Microsoft today released updates to fix more than 50 security holes in its Windows operating systems and other software, including patches for a whopping six "zero-day" vulnerabilities that attackers are already exploiting in the wild.
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://krebsonsecurity.com/2026/02/please-dont-feed-the-scattered-lapsus-shiny-hunters/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Krebs on Security
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Feb 02, 2026 - 16:15 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Please Don’t Feed the Scattered Lapsus ShinyHunters
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        A prolific data ransom gang that calls itself Scattered Lapsus ShinyHunters (SLSH) has a distinctive playbook when it seeks to extort payment from victim firms: Harassing, threatening and even swatting executives and their families, all while notifying journalists and regulators… Read More »
-                    </p>
-                    
-                </a>
-            </article>
-
-            
-
-            
-
-            
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
+            <a href="https://thehackernews.com/2026/02/cisco-sd-wan-zero-day-cve-2026-20127.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 26, 2026 - 11:43 </span>
                 </div>
-            </article>
-
+                <h3>Cisco SD-WAN Zero-Day CVE-2026-20127 Exploited Since 2023 for Admin Access</h3>
+                
+                <p>A newly disclosed maximum-severity security flaw in Cisco Catalyst SD-WAN Controller (formerly vSmart) and Catalyst SD-WAN Manager (formerly vManage) has come under active exploitation in the wild as part of malicious activity that dates back to 2023. The vulnerability, tracked as CVE-2026-20127 (CVSS score: 10.0), allows an unauthenticated remote attacker to bypass authentication and obtain</p>
+                
+            </a>
             
-
             
-
             
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="https://krebsonsecurity.com/2026/01/who-operates-the-badbox-2-0-botnet/" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            Krebs on Security
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            Jan 26, 2026 - 16:11 UTC
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        Who Operates the Badbox 2.0 Botnet?
-                    </h3>
-                    
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        The cybercriminals in control of Kimwolf -- a disruptive botnet that has infected more than 2 million devices -- recently shared a screenshot indicating they'd compromised the control panel for Badbox 2.0, a vast China-based botnet powered by malicious software that comes pre-installed on many Android TV streaming boxes. Both the FBI and Google say they are hunting for the people behind Badbox 2.0, and thanks to bragging by the Kimwolf botmasters we may now have a much clearer idea about that.
-                    </p>
-                    
-                </a>
-            </article>
-
+            <a href="https://thundersweep.com" class="article-card ad-card" target="_blank" rel="noopener noreferrer">
+                <div class="ad-badge">Sponsored Tool</div>
+                <div class="ad-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+                    </svg>
+                </div>
+                <div class="ad-content">
+                    <h3>Are your old tax returns exposed in Gmail?</h3>
+                    <p>Most data breaches start with forgotten attachments. Scan your Gmail locally (zero cloud upload)
+                        to find and delete sensitive documents before hackers do.</p>
+                    <span class="btn btn-primary">Try ThunderSweep Free</span>
+                </div>
+            </a>
             
-
+            
+            
+            <a href="https://www.darkreading.com/cyberattacks-data-breaches/chinese-police-chatgpt-smear-japan-pm-takaichi" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 26, 2026 - 00:00 UTC</span>
+                </div>
+                <h3>Chinese Police Use ChatGPT to Smear Japan PM Takaichi</h3>
+                
+                <p>A Chinese keyboard warrior inadvertently leaked information about politically motivated influence operations through a ChatGPT account.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/medical-device-maker-ufp-technologies-warns-of-data-stolen-in-cyberattack/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 25, 2026 - 18:02 </span>
+                </div>
+                <h3>Medical device maker UFP Technologies warns of data stolen in cyberattack</h3>
+                
+                <p>American manufacturer of medical devices, UFP Technologies, has disclosed that a cybersecurity incident has compromised its IT systems and data. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/application-security/flaws-claude-code-developer-machines-risk" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 25, 2026 - 22:02 UTC</span>
+                </div>
+                <h3>Flaws in Claude Code Put Developers' Machines at Risk</h3>
+                
+                <p>The vulnerabilities highlight a big drawback to integrating AI into software development workflows and the potential impact on supply chains.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/fake-nextjs-job-interview-tests-backdoor-developers-devices/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 25, 2026 - 16:47 </span>
+                </div>
+                <h3>Fake Next.js job interview tests backdoor developer's devices</h3>
+                
+                <p>The Microsoft Defender team has discovered a coordinated campaign targeting software developers through malicious repositories posing as legitimate Next.js projects and technical assessment materials, including recruiting coding tests. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/threat-intelligence/ramp-forum-seizure-fractures-ransomware-ecosystem" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 25, 2026 - 21:14 UTC</span>
+                </div>
+                <h3>RAMP Forum Seizure Fractures Ransomware Ecosystem</h3>
+                
+                <p>Researchers suggest defenders monitor how these malicious groups re-form and leverage the useful threat intel to guide their next moves.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/cyber-risk/pci-council-threats-payments-systems-speeding-up" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 25, 2026 - 19:15 UTC</span>
+                </div>
+                <h3>PCI Council Says Threats to Payments Systems Are Speeding Up</h3>
+                
+                <p>The PCI Security Standards Council experienced a record year in many regards, but its first annual report shows it needs to work even faster to stay ahead of attackers.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/critical-cisco-sd-wan-bug-exploited-in-zero-day-attacks-since-2023/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 25, 2026 - 13:01 </span>
+                </div>
+                <h3>Critical Cisco SD-WAN bug exploited in zero-day attacks since 2023</h3>
+                
+                <p>Cisco is warning that a critical authentication bypass vulnerability in Cisco Catalyst SD-WAN, tracked as CVE-2026-20127, was actively exploited in zero-day attacks that allowed remote attackers to compromise controllers and add malicious rogue peers to targeted networks. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thundersweep.com" class="article-card ad-card" target="_blank" rel="noopener noreferrer">
+                <div class="ad-badge">Sponsored Tool</div>
+                <div class="ad-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+                    </svg>
+                </div>
+                <div class="ad-content">
+                    <h3>Are your old tax returns exposed in Gmail?</h3>
+                    <p>Most data breaches start with forgotten attachments. Scan your Gmail locally (zero cloud upload)
+                        to find and delete sensitive documents before hackers do.</p>
+                    <span class="btn btn-primary">Try ThunderSweep Free</span>
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://thehackernews.com/2026/02/google-disrupts-unc2814-gridtide.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 25, 2026 - 23:16 </span>
+                </div>
+                <h3>Google Disrupts UNC2814 GRIDTIDE Campaign After 53 Breaches Across 42 Countries</h3>
+                
+                <p>Google on Wednesday disclosed that it worked with industry partners to disrupt the infrastructure of a suspected China-nexus cyber espionage group tracked as UNC2814 that breached at least 53 organizations across 42 countries. "This prolific, elusive actor has a long history of targeting international governments and global telecommunications organizations across Africa, Asia, and the Americas,"</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/chinese-cyberspies-breached-dozens-of-telecom-firms-govt-agencies/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 25, 2026 - 12:00 </span>
+                </div>
+                <h3>Chinese cyberspies breached dozens of telecom firms, govt agencies</h3>
+                
+                <p>Google's Threat Intelligence Group (GTIG), Mandiant, and partners disrupted a global espionage campaign attributed to a suspected Chinese threat actor that used SaaS API calls to hide malicious traffic in attacks targeting telecom and government networks. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thehackernews.com/2026/02/claude-code-flaws-allow-remote-code.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 25, 2026 - 22:30 </span>
+                </div>
+                <h3>Claude Code Flaws Allow Remote Code Execution and API Key Exfiltration</h3>
+                
+                <p>Cybersecurity researchers have disclosed multiple security vulnerabilities in Anthropic's Claude Code, an artificial intelligence (AI)-powered coding assistant, that could result in remote code execution and theft of API credentials. "The vulnerabilities exploit various configuration mechanisms, including Hooks, Model Context Protocol (MCP) servers, and environment variables – executing</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/cyberattacks-data-breaches/malicious-nextjs-repos-developers-fake-job-interviews" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 25, 2026 - 16:42 UTC</span>
+                </div>
+                <h3>Malicious Next.js Repos Target Developers Via Fake Job Interviews</h3>
+                
+                <p>Linked to North Korean fake job-recruitment campaigns, the poisoned repositories are aimed at establishing persistent access to infected machines.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/marquis-sues-sonicwall-over-backup-breach-that-led-to-ransomware-attack/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 25, 2026 - 10:54 </span>
+                </div>
+                <h3>Marquis sues SonicWall over backup breach that led to ransomware attack</h3>
+                
+                <p>Marquis Software Solutions has filed a lawsuit against SonicWall, accusing the cybersecurity company of gross negligence and misrepresentation that allegedly led to a ransomware attack disrupting operations at 74 U.S. banks. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thehackernews.com/2026/02/slh-offers-5001000-per-call-to-recruit.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 25, 2026 - 20:36 </span>
+                </div>
+                <h3>SLH Offers $500–$1,000 Per Call to Recruit Women for IT Help Desk Vishing Attacks</h3>
+                
+                <p>The notorious cybercrime collective known as Scattered LAPSUS$ Hunters (SLH) has been observed offering financial incentives to recruit women to pull off social engineering attacks. The idea is to hire them for voice phishing campaigns targeting IT help desks, Dataminr said in a new threat brief. The group is said to be offering anywhere between $500 and $1,000 upfront per call, in addition to</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/the-openclaw-hype-analysis-of-chatter-from-open-source-deep-and-dark-web/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 25, 2026 - 10:01 </span>
+                </div>
+                <h3>The OpenClaw Hype: Analysis of Chatter from Open-Source Deep and Dark Web</h3>
+                
+                <p>OpenClaw has sparked heavy Telegram and dark web chatter, but Flare's data shows more research hype than mass exploitation. Flare explains how its telemetry found real supply-chain risk in the skills marketplace, yet limited signs of large-scale criminal operationalization. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thundersweep.com" class="article-card ad-card" target="_blank" rel="noopener noreferrer">
+                <div class="ad-badge">Sponsored Tool</div>
+                <div class="ad-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+                    </svg>
+                </div>
+                <div class="ad-content">
+                    <h3>Are your old tax returns exposed in Gmail?</h3>
+                    <p>Most data breaches start with forgotten attachments. Scan your Gmail locally (zero cloud upload)
+                        to find and delete sensitive documents before hackers do.</p>
+                    <span class="btn btn-primary">Try ThunderSweep Free</span>
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://thehackernews.com/2026/02/top-5-ways-broken-triage-increases.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 25, 2026 - 20:00 </span>
+                </div>
+                <h3>Top 5 Ways Broken Triage Increases Business Risk Instead of Reducing It</h3>
+                
+                <p>Triage is supposed to make things simpler. In a lot of teams, it does the opposite. When you can’t reach a confident verdict early, alerts turn into repeat checks, back-and-forth, and “just escalate it” calls. That cost doesn’t stay inside the SOC; it shows up as missed SLAs, higher cost per case, and more room for real threats to slip through. So where does triage go wrong? Here are five triage</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/threat-intelligence/why-call-this-number-toad-emails-beat-gateways" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 25, 2026 - 14:00 UTC</span>
+                </div>
+                <h3>Why 'Call This Number' TOAD Emails Beat Gateways</h3>
+                
+                <p>Attackers are bypassing email gateways through telephone-oriented attack delivery (TOAD), in which the only email payload is a phone number.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/zyxel-warns-of-critical-rce-flaw-affecting-over-a-dozen-routers/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 25, 2026 - 07:53 </span>
+                </div>
+                <h3>Zyxel warns of critical RCE flaw affecting over a dozen routers</h3>
+                
+                <p>Taiwan networking provider Zyxel has released security updates to address a critical vulnerability affecting over a dozen router models that can allow unauthenticated attackers to gain remote command execution on unpatched devices. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thehackernews.com/2026/02/malicious-nuget-packages-stole-aspnet.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 25, 2026 - 18:13 </span>
+                </div>
+                <h3>Malicious NuGet Packages Stole ASP.NET Data; npm Package Dropped Malware</h3>
+                
+                <p>Cybersecurity researchers have discovered four malicious NuGet packages that are designed to target ASP.NET web application developers to steal sensitive data. The campaign, discovered by Socket, exfiltrates ASP.NET Identity data, including user accounts, role assignments, and permission mappings, as well as manipulates authorization rules to create persistent backdoors in victim applications.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/ics-ot-security/richter-scale-model-measures-cyber-incidents" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 25, 2026 - 12:00 UTC</span>
+                </div>
+                <h3>'Richter Scale' Model Measures Magnitude of OT Cyber Incidents</h3>
+                
+                <p>ICS/OT experts have devised a scoring system for rating the severity and effects of cybersecurity events in operational technology environments.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thehackernews.com/2026/02/manual-processes-are-putting-national.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 25, 2026 - 16:30 </span>
+                </div>
+                <h3>Manual Processes Are Putting National Security at Risk</h3>
+                
+                <p>Why automating sensitive data transfers is now a mission-critical priority More than half of national security organizations still rely on manual processes to transfer sensitive data, according to The CYBER360: Defending the Digital Battlespace report. This should alarm every defense and government leader because manual handling of sensitive data is not just inefficient, it is a systemic</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.bleepingcomputer.com/news/security/us-sanctions-russian-exploit-broker-for-buying-stolen-zero-days/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">BleepingComputer</span>
+                    <span class="date">Feb 25, 2026 - 05:31 </span>
+                </div>
+                <h3>US sanctions Russian broker for buying stolen zero-day exploits</h3>
+                
+                <p>The U.S. Treasury Department has sanctioned a Russian exploit broker who bought stolen hacking tools from a former executive of a U.S. defense contractor. [...]</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thundersweep.com" class="article-card ad-card" target="_blank" rel="noopener noreferrer">
+                <div class="ad-badge">Sponsored Tool</div>
+                <div class="ad-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+                    </svg>
+                </div>
+                <div class="ad-content">
+                    <h3>Are your old tax returns exposed in Gmail?</h3>
+                    <p>Most data breaches start with forgotten attachments. Scan your Gmail locally (zero cloud upload)
+                        to find and delete sensitive documents before hackers do.</p>
+                    <span class="btn btn-primary">Try ThunderSweep Free</span>
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://thehackernews.com/2026/02/defense-contractor-employee-jailed-for.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 25, 2026 - 14:19 </span>
+                </div>
+                <h3>Defense Contractor Employee Jailed for Selling 8 Zero-Days to Russian Broker</h3>
+                
+                <p>A 39-year-old Australian national who was previously employed at U.S. defense contractor L3Harris has been sentenced to a little over seven years in prison for selling eight zero-day exploits to Russian exploit broker Operation Zero in exchange for millions of dollars. Peter Williams pleaded guilty to two counts of theft of trade secrets in October 2025. In addition to the jail term, Williams</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/cybersecurity-operations/operation-red-card-2-0-leads-to-651-arrests-in-africa" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 25, 2026 - 08:00 UTC</span>
+                </div>
+                <h3>Operation Red Card 2.0 Leads to 651 Arrests in Africa</h3>
+                
+                <p>In the latest operation targeting cybercrime groups, African law enforcement agencies cooperated with Interpol and cybersecurity firms to recover more than $4.3 million.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thehackernews.com/2026/02/solarwinds-patches-4-critical-serv-u.html" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">The Hacker News</span>
+                    <span class="date">Feb 25, 2026 - 12:34 </span>
+                </div>
+                <h3>SolarWinds Patches 4 Critical Serv-U 15.5 Flaws Allowing Root Code Execution</h3>
+                
+                <p>SolarWinds has released updates to address four critical security flaws in its Serv-U file transfer software that, if successfully exploited, could result in remote code execution. The vulnerabilities, all rated 9.1 on the CVSS scoring system, are listed below - CVE-2025-40538 - A broken access control vulnerability that allows an attacker to create a system admin user and execute arbitrary</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/cyber-risk/attackers-now-need-just-29-minutes-to-own-a-network" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 24, 2026 - 21:38 UTC</span>
+                </div>
+                <h3>Attackers Now Need Just 29 Minutes to Own a Network</h3>
+                
+                <p>Credential misuse, AI tools, and security blind spots help attackers move through breached networks faster than ever, CrowdStrike finds.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/cyberattacks-data-breaches/lazarus-group-new-position-medusa-ransomware" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 24, 2026 - 21:18 UTC</span>
+                </div>
+                <h3>Lazarus Group Picks a New Poison: Medusa Ransomware</h3>
+                
+                <p>The North Korean threat group also leveraged Comebacker backdoor, Blindingcan RAT, and info stealer Infohook in its recent attacks.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/cybersecurity-analytics/cybersecurity-firms-chase-ai-vc-market-skyrockets" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 24, 2026 - 13:04 UTC</span>
+                </div>
+                <h3>As Cybersecurity Firms Chase AI, VC Market Skyrockets</h3>
+                
+                <p>Investments in cybersecurity startups took off in 2025 as venture capital firms focused not just on AI-native tech but on talent as well.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/cyber-risk/atm-jackpotting-attacks-surged-2025" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 23, 2026 - 22:20 UTC</span>
+                </div>
+                <h3>Spitting Cash: ATM Jackpotting Attacks Surged in 2025</h3>
+                
+                <p>The attacks cost banks more than $20 million in losses last year, as criminals used many of the same tools and tactics they have wielded for more than a decade.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thundersweep.com" class="article-card ad-card" target="_blank" rel="noopener noreferrer">
+                <div class="ad-badge">Sponsored Tool</div>
+                <div class="ad-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+                    </svg>
+                </div>
+                <div class="ad-content">
+                    <h3>Are your old tax returns exposed in Gmail?</h3>
+                    <p>Most data breaches start with forgotten attachments. Scan your Gmail locally (zero cloud upload)
+                        to find and delete sensitive documents before hackers do.</p>
+                    <span class="btn btn-primary">Try ThunderSweep Free</span>
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/cyber-risk/more-dashboards-ai-decisions-provable" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 23, 2026 - 22:18 UTC</span>
+                </div>
+                <h3>More Than Dashboards: AI Decisions Must Be Provable</h3>
+                
+                <p>AI systems have to be able to show a record of what happened and how.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/threat-intelligence/iran-muddywater-new-malware-tensions-mount" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 23, 2026 - 20:35 UTC</span>
+                </div>
+                <h3>Iran's MuddyWater Targets Orgs With Fresh Malware as Tensions Mount</h3>
+                
+                <p>The long-active Iranian threat group debuted various attack strains and payloads in attacks against organizations in the Middle East and Africa.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://www.darkreading.com/threat-intelligence/enigma-cipher-device-secrets-cyber-pros" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Dark Reading</span>
+                    <span class="date">Feb 23, 2026 - 20:11 UTC</span>
+                </div>
+                <h3>Enigma Cipher Device Still Holds Secrets for Cyber Pros</h3>
+                
+                <p>The Nazi relic's history is riddled with resilience errors, and those lessons still apply to defending against modern cyber threats.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://krebsonsecurity.com/2026/02/starkiller-phishing-service-proxies-real-login-pages-mfa/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Krebs on Security</span>
+                    <span class="date">Feb 20, 2026 - 20:00 UTC</span>
+                </div>
+                <h3>‘Starkiller’ Phishing Service Proxies Real Login Pages, MFA</h3>
+                
+                <p>Most phishing websites are little more than static copies of login pages for popular online destinations, and they are often quickly taken down by anti-abuse activists and security firms. But a stealthy new phishing-as-a-service offering lets customers sidestep both of these pitfalls: It uses cleverly disguised links to load the target brand's real website, and then acts as a relay between the target and the legitimate site -- forwarding the victim's username, password and multi-factor authentication (MFA) code to the legitimate site and returning its responses.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://krebsonsecurity.com/2026/02/kimwolf-botnet-swamps-anonymity-network-i2p/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Krebs on Security</span>
+                    <span class="date">Feb 11, 2026 - 16:08 UTC</span>
+                </div>
+                <h3>Kimwolf Botnet Swamps Anonymity Network I2P</h3>
+                
+                <p>For the past week, the massive "Internet of Things" (IoT) botnet known as Kimwolf has been disrupting the The Invisible Internet Project (I2P), a decentralized, encrypted communications network designed to anonymize and secure online communications. I2P users started reporting disruptions in the network around the same time the Kimwolf botmasters began relying on it to evade takedown attempts against the botnet's control servers.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://krebsonsecurity.com/2026/02/patch-tuesday-february-2026-edition/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Krebs on Security</span>
+                    <span class="date">Feb 10, 2026 - 21:49 UTC</span>
+                </div>
+                <h3>Patch Tuesday, February 2026 Edition</h3>
+                
+                <p>Microsoft today released updates to fix more than 50 security holes in its Windows operating systems and other software, including patches for a whopping six "zero-day" vulnerabilities that attackers are already exploiting in the wild.</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://krebsonsecurity.com/2026/02/please-dont-feed-the-scattered-lapsus-shiny-hunters/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Krebs on Security</span>
+                    <span class="date">Feb 02, 2026 - 16:15 UTC</span>
+                </div>
+                <h3>Please Don’t Feed the Scattered Lapsus ShinyHunters</h3>
+                
+                <p>A prolific data ransom gang that calls itself Scattered Lapsus ShinyHunters (SLSH) has a distinctive playbook when it seeks to extort payment from victim firms: Harassing, threatening and even swatting executives and their families, all while notifying journalists and regulators… Read More »</p>
+                
+            </a>
+            
+            
+            
+            <a href="https://thundersweep.com" class="article-card ad-card" target="_blank" rel="noopener noreferrer">
+                <div class="ad-badge">Sponsored Tool</div>
+                <div class="ad-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+                    </svg>
+                </div>
+                <div class="ad-content">
+                    <h3>Are your old tax returns exposed in Gmail?</h3>
+                    <p>Most data breaches start with forgotten attachments. Scan your Gmail locally (zero cloud upload)
+                        to find and delete sensitive documents before hackers do.</p>
+                    <span class="btn btn-primary">Try ThunderSweep Free</span>
+                </div>
+            </a>
+            
+            
+            
+            <a href="https://krebsonsecurity.com/2026/01/who-operates-the-badbox-2-0-botnet/" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">Krebs on Security</span>
+                    <span class="date">Jan 26, 2026 - 16:11 UTC</span>
+                </div>
+                <h3>Who Operates the Badbox 2.0 Botnet?</h3>
+                
+                <p>The cybercriminals in control of Kimwolf -- a disruptive botnet that has infected more than 2 million devices -- recently shared a screenshot indicating they'd compromised the control panel for Badbox 2.0, a vast China-based botnet powered by malicious software that comes pre-installed on many Android TV streaming boxes. Both the FBI and Google say they are hunting for the people behind Badbox 2.0, and thanks to bragging by the Kimwolf botmasters we may now have a much clearer idea about that.</p>
+                
+            </a>
+            
             
         </div>
+    </div>
 
-    </main>
-
-    <footer class="bg-brand-900 border-t border-gray-800 mt-12 py-8">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center text-sm text-gray-500">
-            <p>&copy; 2026 ThunderSecurity LLC. Aggregated for educational purposes.</p>
+    <footer>
+        <div class="footer-links">
+            <a href="https://thundersweep.com/privacy.html">Privacy Policy</a>
+            <a href="https://thundersweep.com/terms-of-service.html">Terms of Service</a>
+            <a href="https://thundersweep.com/setup.html">Setup Guide</a>
+            <a href="mailto:support@thundersweep.com">Contact Support</a>
+            <a href="https://x.com/ThunderSweepApp" target="_blank">Twitter/X</a>
         </div>
+        <p>&copy; 2026 ThunderSecurity LLC. All rights reserved.</p>
+        <p style="margin-top: 8px;">ThunderSweep is an informational tool. It does not guarantee detection of all
+            sensitive data and is not a substitute for professional data loss prevention solutions.</p>
     </footer>
-
 </body>
 
 </html>
