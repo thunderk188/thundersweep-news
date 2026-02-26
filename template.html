@@ -1,150 +1,432 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cybersecurity News - ThunderSecurity</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            500: '#3b82f6', // Bright blue
-                            600: '#2563eb', // Deeper blue
-                            900: '#0f172a', // Very dark slate (background)
-                            800: '#1e293b', // Dark slate (cards)
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Cybersecurity News — ThunderSweep</title>
+    <meta name="description" content="Aggregated real-time updates from top cybersecurity sources.">
+    <link rel="icon" type="image/png" href="https://thundersweep.com/logo.png">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --blue: #1a73e8;
+            --blue-dark: #1557b0;
+            --blue-light: #e8f0fe;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --radius: 12px;
+            --red-light: #fef2f2;
+            --red: #ef4444;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            color: var(--gray-900);
+            line-height: 1.6;
+            background: #fff;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 12px 0;
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--gray-900);
+        }
+
+        .nav-brand img {
+            height: 32px;
+        }
+
+        .nav-brand span {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .nav-brand .brand-sub {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--blue);
+            margin-left: 4px;
+            border-left: 1px solid var(--gray-200);
+            padding-left: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--blue);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: #fff !important;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-dark);
+            transform: translateY(-1px);
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 56px 24px 80px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--gray-200);
+            padding-bottom: 24px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .page-header p {
+            color: var(--gray-500);
+            margin-top: 4px;
+            font-size: 1.1rem;
+        }
+
+        .last-updated {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-align: right;
+        }
+
+        .last-updated span {
+            font-weight: 600;
+            color: var(--gray-700);
+            display: block;
+        }
+
+        .articles-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* ARTICLE CARDS */
+        .article-card {
+            background: #fff;
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--gray-200);
+            transition: box-shadow 0.2s, border-color 0.2s;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .article-card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-color: var(--blue-light);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .source-tag {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .article-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 10px;
+            line-height: 1.4;
+            transition: color 0.2s;
+        }
+
+        .article-card:hover h3 {
+            color: var(--blue);
+        }
+
+        .article-card p {
+            font-size: 14.5px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* AD CARD */
+        .ad-card {
+            background: var(--blue-light);
+            border: 1.5px solid var(--blue);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 32px 24px;
+        }
+
+        .ad-card:hover {
+            border-color: var(--blue-dark);
+        }
+
+        .ad-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--blue);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 0 12px 0 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ad-icon {
+            flex-shrink: 0;
+            width: 56px;
+            height: 56px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.15);
+        }
+
+        .ad-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--blue);
+        }
+
+        .ad-content {
+            flex: 1;
+        }
+
+        .ad-content h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .ad-content p {
+            font-size: 14px;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+            -webkit-line-clamp: unset;
+        }
+
+        .ad-card .btn-primary {
+            width: fit-content;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--gray-900);
+            color: var(--gray-500);
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 13px;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--gray-500);
+            text-decoration: underline;
+        }
+
+        footer .footer-links {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 640px) {
+            .hide-mobile {
+                display: none;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .last-updated {
+                text-align: left;
+            }
+
+            .ad-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 32px 20px 24px;
+            }
+
+            .ad-card .btn-primary {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
-<body class="bg-brand-900 text-gray-200 min-h-screen">
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a class="nav-brand" href="https://thundersweep.com">
+                <img src="https://thundersweep.com/logo.png" alt="ThunderSweep">
+                <span>ThunderSweep</span>
+                <span class="brand-sub">News</span>
+            </a>
+            <div class="nav-links">
+                <a href="https://thundersweep.com/blog/index.html" class="hide-mobile">Read Our Blog</a>
+                <a href="https://thundersweep.com" class="hide-mobile">Back to Main Site</a>
+                <a href="https://chromewebstore.google.com/" target="_blank" class="btn btn-primary">Try
+                    ThunderSweep</a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Header -->
-    <header class="bg-brand-800 border-b border-gray-700 sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-            <a href="https://thundersweep.com" class="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-                <!-- Using the same concept, but making it a clickable link to main domain -->
-                <svg class="w-8 h-8 text-brand-500" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                </svg>
-                <div class="flex flex-col">
-                    <h1 class="text-xl font-bold tracking-tight leading-none text-white">ThunderSweep</h1>
-                    <span class="text-[10px] font-bold tracking-wider text-brand-400 uppercase mt-1">News
-                        Aggregator</span>
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <h1>Latest Intelligence</h1>
+                <p>Aggregated real-time updates from top cybersecurity sources.</p>
+            </div>
+            <div class="last-updated">
+                Last updated:<br />
+                <span>{{ last_updated }}</span>
+            </div>
+        </div>
+
+        <div class="articles-grid">
+            {% for item in articles %}
+            {% if item.is_ad %}
+            <a href="https://thundersweep.com" class="article-card ad-card" target="_blank" rel="noopener noreferrer">
+                <div class="ad-badge">Sponsored Tool</div>
+                <div class="ad-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+                    </svg>
+                </div>
+                <div class="ad-content">
+                    <h3>Are your old tax returns exposed in Gmail?</h3>
+                    <p>Most data breaches start with forgotten attachments. Scan your Gmail locally (zero cloud upload)
+                        to find and delete sensitive documents before hackers do.</p>
+                    <span class="btn btn-primary">Try ThunderSweep Free</span>
                 </div>
             </a>
-            <div class="flex items-center space-x-6">
-                <a href="https://thundersweep.com/blog/index.html"
-                    class="hidden sm:block text-sm font-medium text-gray-400 hover:text-white transition-colors">Read
-                    Our Blog</a>
-                <a href="https://thundersweep.com"
-                    class="hidden sm:inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors">
-                    Back to Main Site
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-
-        <div class="mb-8 flex justify-between items-end">
-            <div>
-                <h2 class="text-2xl font-extrabold text-white tracking-tight">Latest Intelligence</h2>
-                <p class="mt-1 text-sm text-gray-400">Aggregated real-time updates from top cybersecurity sources.</p>
-            </div>
-            <div class="text-xs text-gray-500 text-right">
-                Last updated:<br /> <span class="font-medium text-gray-400">{{ last_updated }}</span>
-            </div>
-        </div>
-
-        <div class="space-y-6">
-            {% for item in articles %}
-
-            {% if item.is_ad %}
-
-            <!-- ThunderSweep Native Ad -->
-            <article
-                class="bg-gradient-to-r from-brand-800 to-indigo-900 rounded-xl overflow-hidden shadow-lg border border-brand-500 relative transition-transform transform hover:-translate-y-1 duration-200">
-                <div
-                    class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Sponsored Tool</div>
-                <div
-                    class="p-6 sm:p-8 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
-                    <div class="flex-shrink-0 bg-white/10 p-4 rounded-full">
-                        <svg class="w-10 h-10 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-xl font-bold text-white mb-2">Are your old tax returns exposed in Gmail?</h3>
-                        <p class="text-blue-100 text-sm mb-4">Most data breaches start with forgotten attachments. Scan
-                            your Gmail locally (zero cloud upload) to find and delete sensitive documents before hackers
-                            do.</p>
-                        <a href="https://chromewebstore.google.com/" target="_blank"
-                            class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-semibold text-brand-900 bg-white hover:bg-gray-100 transition-colors">
-                            Add ThunderSweep to Chrome
-                        </a>
-                    </div>
-                </div>
-            </article>
-
             {% else %}
-
-            <!-- Standard Article Card -->
-            <article
-                class="bg-brand-800 rounded-lg overflow-hidden shadow border border-gray-700 hover:border-gray-500 transition-colors">
-                <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer" class="block p-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span
-                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
-                            {{ item.source }}
-                        </span>
-                        <span class="text-xs text-gray-500 whitespace-nowrap ml-4">
-                            {{ item.published }}
-                        </span>
-                    </div>
-                    <h3
-                        class="text-lg font-semibold text-gray-100 mb-2 hover:text-brand-500 transition-colors line-clamp-2">
-                        {{ item.title }}
-                    </h3>
-                    {% if item.summary %}
-                    <p class="text-sm text-gray-400 line-clamp-3">
-                        {{ item.summary | striptags }}
-                    </p>
-                    {% endif %}
-                </a>
-            </article>
-
+            <a href="{{ item.link }}" class="article-card" target="_blank" rel="noopener noreferrer">
+                <div class="article-meta">
+                    <span class="source-tag">{{ item.source }}</span>
+                    <span class="date">{{ item.published }}</span>
+                </div>
+                <h3>{{ item.title }}</h3>
+                {% if item.summary %}
+                <p>{{ item.summary | striptags }}</p>
+                {% endif %}
+            </a>
             {% endif %}
-
             {% endfor %}
         </div>
+    </div>
 
-    </main>
-
-    <footer class="bg-brand-900 border-t border-gray-800 mt-12 py-8">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center text-sm text-gray-500">
-            <p>&copy; {{ year }} ThunderSecurity LLC. Aggregated for educational purposes.</p>
+    <footer>
+        <div class="footer-links">
+            <a href="https://thundersweep.com/privacy.html">Privacy Policy</a>
+            <a href="https://thundersweep.com/terms-of-service.html">Terms of Service</a>
+            <a href="https://thundersweep.com/setup.html">Setup Guide</a>
+            <a href="mailto:support@thundersweep.com">Contact Support</a>
+            <a href="https://x.com/ThunderSweepApp" target="_blank">Twitter/X</a>
         </div>
+        <p>&copy; {{ year }} ThunderSecurity LLC. All rights reserved.</p>
+        <p style="margin-top: 8px;">ThunderSweep is an informational tool. It does not guarantee detection of all
+            sensitive data and is not a substitute for professional data loss prevention solutions.</p>
     </footer>
-
 </body>
 
 </html>
